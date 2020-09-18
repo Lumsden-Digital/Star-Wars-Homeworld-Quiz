@@ -6,6 +6,8 @@ function App() {
 
   const [peopleData, setPeopleData] = useState([{}])
   const [score, setScore] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [question, setQuestion] = useState(1)
 
   
   useEffect(() => {
@@ -46,7 +48,7 @@ function App() {
             peopleArray[index].homeworldName = data.name
             peopleArray[index].id = index + 1
             peopleArray[index].flipped = false
-            peopleArray[index].complete = false
+            peopleArray[index].complete = false            
           })
       })
 
@@ -54,6 +56,7 @@ function App() {
 
       setTimeout(() => {
         setPeopleData(peopleArray)
+        setIsLoading(false)
       }, 2000)
 
     }) () // getData
@@ -92,25 +95,55 @@ function App() {
       return newData
     })
   }
+  
+  const nextQuestion = () => {
+    setQuestion(prevQuestion => prevQuestion + 1)
+  }
 
   const incrementScore = () => {
     setScore(prevCount => prevCount + 1)
   }
 
+  const correct = () => {
+    nextQuestion()
+    incrementScore()
+  }
+
+  const incorrect = () => {
+    nextQuestion()
+  }
+
+
   return (
     <div> 
-
+    
       <header>
-        <h1> {`Score: ${score}`} </h1>
+        <h1> {`Score: ${score}/20`} </h1>
       </header>
 
       <main>
+
+        {(isLoading) ?
+
+        <h1>Loading...</h1>  
+
+        :
+        
         <FlashcardList           
           peopleData={peopleData}
           flip={flip}
-          incrementScore={incrementScore}
-          completeQuestion={completeQuestion}    
+
+          // function props
+          // incrementScore={incrementScore}
+          completeQuestion={completeQuestion}
+          // nextQuestion={nextQuestion}
+          question={question}  
+          correct={correct}
+          incorrect={incorrect}  
         />
+
+      }
+
       </main>
 
     </div>

@@ -7,21 +7,22 @@ function Flashcard(props) {
 
             <h1>{(props.flipped) ? props.answer : props.name}</h1>
 
-            <button 
-                onClick={() => {props.flip(props.id)}} 
-            >Reveal</button>
+            <div style={btnStyle}>
 
+                <button onClick={() => {props.flip(props.id)}}>Reveal</button>
 
-            <div>
+                <button onClick={() => {props.incorrect()}}>Nope!</button>
+
                 {(props.complete) ? <button>It's away!</button>
                 : 
                 <button                
                     onClick={() => {
-                        props.incrementScore()
+                        props.correct()
                         props.completeQuestion(props.id)
                     }}
                 >correct!</button>
                 }
+
             </div>
 
 
@@ -33,6 +34,11 @@ const flashcardStyle = {
     border: 'grey solid 2px',
     margin: '1rem',
     textAlign: 'center'
+}
+
+const btnStyle = {
+    display: 'flex',
+    justifyContent: 'space-between'
 }
 
 export default Flashcard
