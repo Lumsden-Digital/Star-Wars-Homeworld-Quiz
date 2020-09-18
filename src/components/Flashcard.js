@@ -38,7 +38,7 @@ const flashcardStyle = {
 
 const btnStyle = {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'center'
 }
 
 export default Flashcard

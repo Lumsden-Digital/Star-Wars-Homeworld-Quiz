@@ -34,7 +34,7 @@ function App() {
 
       // create variable of allPeopleData then array of URLs to fetch homeworlds
       let peopleArray = allPeopleData
-      const planetLinks = peopleArray.map(personObj => personObj.homeworld)
+      const planetLinks = peopleArray.map(personObj => personObj.homeworld.replace(/http/g,"https"))
 
       // Get homeworld names of each character and add to peopleArray, then add an id and flipped state 
       planetLinks.forEach((url, index) => {
@@ -123,20 +123,14 @@ function App() {
 
       <main>
 
-        {(isLoading) ?
-
-        <h1>Loading...</h1>  
-
-        :
+        {(isLoading) ? <h1>Loading...</h1> :
         
         <FlashcardList           
           peopleData={peopleData}
           flip={flip}
 
-          // function props
-          // incrementScore={incrementScore}
+          //// function props
           completeQuestion={completeQuestion}
-          // nextQuestion={nextQuestion}
           question={question}  
           correct={correct}
           incorrect={incorrect}  
@@ -153,4 +147,3 @@ function App() {
 
 
 export default App;
-
