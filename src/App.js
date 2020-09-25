@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import './App.css';
 import FlashcardList from './components/FlashcardList'
+import Intro from './components/Intro'
 
 function App() {
 
   const [peopleData, setPeopleData] = useState([{}])
   const [score, setScore] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
-  const [question, setQuestion] = useState(1)
+  const [question, setQuestion] = useState(0)
 
   
   useEffect(() => {
@@ -52,19 +53,19 @@ function App() {
           })
       })
 
-      // console.log(peopleArray);
-
+      /////////////////////////////////////////////////////////////////////
+      // Delay setting peopleData state until peopleArray has been set!! //
+      /////////////////////////////////////////////////////////////////////     
       setTimeout(() => {
         setPeopleData(peopleArray)
         setIsLoading(false)
-      }, 2000)
+      }, 500)
 
     }) () // getData
       
    
   }, []) // useEffect
-
-
+  
   
   const flip = (id) => {
     setPeopleData(prevData => {
@@ -96,24 +97,26 @@ function App() {
     })
   }
   
+  //////////////////////
+  // Button functions //
+  //////////////////////
   const nextQuestion = () => {
     setQuestion(prevQuestion => prevQuestion + 1)
   }
-
   const incrementScore = () => {
     setScore(prevCount => prevCount + 1)
   }
-
   const correct = () => {
     nextQuestion()
     incrementScore()
   }
-
   const incorrect = () => {
     nextQuestion()
   }
 
-
+  ///////////////////
+  // Display logic //
+  ///////////////////
   return (
     <div> 
     
@@ -122,28 +125,26 @@ function App() {
       </header>
 
       <main>
-
-        {(isLoading) ? <h1>Loading...</h1> :
+        {(isLoading) ? <h1>Loading...</h1> : !question ? <Intro incorrect={incorrect}/> :
         
-        <FlashcardList           
-          peopleData={peopleData}
-          flip={flip}
+        <FlashcardList   
+          //// state props        
+          peopleData={peopleData}          
+          question={question}
 
           //// function props
-          completeQuestion={completeQuestion}
-          question={question}  
+          flip={flip}
+          completeQuestion={completeQuestion}            
           correct={correct}
           incorrect={incorrect}  
         />
 
       }
-
       </main>
 
     </div>
 
   )
 }
-
 
 export default App;
