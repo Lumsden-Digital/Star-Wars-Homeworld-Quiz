@@ -28,12 +28,6 @@ function Flashcard(props) {
         
 }
 
-const flashcardStyle = {
-    border: 'grey solid 2px',
-    margin: '1rem',
-    textAlign: 'center'
-}
-
 const btnStyle = {
     display: 'flex',
     justifyContent: 'center'
