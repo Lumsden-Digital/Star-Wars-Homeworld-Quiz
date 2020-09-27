@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
-function Flashcard(props) {
+function Flashcard(props) {  
+
     return (
         <div>
 
@@ -15,7 +16,7 @@ function Flashcard(props) {
                     onClick={() => {props.incorrect()}}
                     variant='contained'
                     color='secondary'
-                    className='btn'
+                    size='large'
                 >Nope!</Button>
 
                 {(props.complete) ? 
@@ -24,7 +25,8 @@ function Flashcard(props) {
                     onClick={() => {props.correct()                        
                         props.completeQuestion(props.id)}}
                     variant='contained' 
-                    color='primary'                   
+                    color='primary'
+                    size='large'                   
                 >correct!</Button>
                 }
             </div>

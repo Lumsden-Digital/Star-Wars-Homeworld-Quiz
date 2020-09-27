@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react'
 import './App.css';
 import FlashcardList from './components/FlashcardList'
 import Intro from './components/Intro'
-import { Container, AppBar, Toolbar} from '@material-ui/core'
+import { Container, AppBar, Toolbar, Typography} from '@material-ui/core'
+import LinearProgress from '@material-ui/core/LinearProgress';
 import FinalScore from './components/FinalScore';
 
 
@@ -120,41 +121,73 @@ function App() {
   ///////////////////
   // Display logic //
   ///////////////////
+
+  const appbarStyle = {
+    // backgroundColor: 'black',
+    color: 'white'
+  }
+  const toolbarStyle = {
+    display: 'flex',
+  }
+  const titleStyle = {
+    maxWidth: '50%'
+  }
+  const scoreStyle = {
+    marginLeft: 'auto'
+  }
+  const progressStyle = {
+    marginTop: '2rem'
+  }
+  
   return (
-    <div> 
-    <AppBar position="static" color='inherit'>
-      <Toolbar>      
-      {`Score: ${score}/20`}
-      </Toolbar>
-    </AppBar>     
-    
-    <Container maxWidth='false'>
-      {/* <header>
-        <h1> {`Score: ${score}/20`} </h1>
-      </header> */}
+    <div>    
+      <Container maxWidth='sm'>
 
-      <main>
-        {(isLoading) ? <h1>Loading...</h1> : (question===0) ? <Intro incorrect={incorrect}/> :
-        (question===21) ? <FinalScore score={score}/> :
-        <FlashcardList   
-          //// state props        
-          peopleData={peopleData}          
-          question={question}
+        <AppBar position="static" style={appbarStyle}>
+          <Toolbar style={toolbarStyle}>      
+            <Typography variant="h6" style={titleStyle}>
+              Star Wars Homeworld Quiz       
+            </Typography>
+            <Typography variant="h6" style={scoreStyle}>
+              {`Score: ${score}/20`}        
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-          //// function props
-          flip={flip}
-          completeQuestion={completeQuestion}            
-          correct={correct}
-          incorrect={incorrect}  
-        />
+        <main>
+            {(isLoading) ? <h1>Loading...</h1> : (question===0) ? <Intro incorrect={incorrect}/> :
+            (question===21) ? <FinalScore score={score}/> :
+            <FlashcardList   
+              //// state props        
+              peopleData={peopleData}          
+              question={question}
 
-      }
-      </main>
-    </Container>
+              //// function props
+              flip={flip}
+              completeQuestion={completeQuestion}            
+              correct={correct}
+              incorrect={incorrect}  
+            />
+
+          }   
+            {
+              (!question) ? '' : (question < 21) ?
+              <div>
+                <LinearProgress variant="determinate" value={question} style={progressStyle}/>  
+                <Typography variant='h6'>Question {question} out of 20</Typography>
+              </div> : ''
+          }
+                      
+            
+
+        </main>
+      </Container>
 
     </div>
 
   )
+    
+
 }
 
 export default App;
