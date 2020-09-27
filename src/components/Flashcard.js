@@ -1,7 +1,6 @@
 import React from 'react'
-
+import { Button } from '@material-ui/core'
 function Flashcard(props) {
-
     return (
         <div>
 
@@ -11,15 +10,22 @@ function Flashcard(props) {
             </div>
         
             <div style={btnStyle}>
-                <button onClick={() => {props.incorrect()}}>Nope!</button>
-                {(props.complete) ? <button>It's away!</button>
-                : 
-                <button                
-                    onClick={() => {
-                        props.correct()
-                        props.completeQuestion(props.id)
-                    }}
-                >correct!</button>
+
+                <Button 
+                    onClick={() => {props.incorrect()}}
+                    variant='contained'
+                    color='secondary'
+                    className='btn'
+                >Nope!</Button>
+
+                {(props.complete) ? 
+                <Button variant='contained'>It's away!</Button>: 
+                <Button                
+                    onClick={() => {props.correct()                        
+                        props.completeQuestion(props.id)}}
+                    variant='contained' 
+                    color='primary'                   
+                >correct!</Button>
                 }
             </div>
 
@@ -30,7 +36,8 @@ function Flashcard(props) {
 
 const btnStyle = {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+
 }
 
 export default Flashcard

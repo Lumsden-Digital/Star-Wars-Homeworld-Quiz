@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react'
 import './App.css';
 import FlashcardList from './components/FlashcardList'
 import Intro from './components/Intro'
+import { Container, AppBar, Toolbar} from '@material-ui/core'
+import FinalScore from './components/FinalScore';
+
 
 function App() {
 
@@ -119,14 +122,20 @@ function App() {
   ///////////////////
   return (
     <div> 
+    <AppBar position="static" color='inherit'>
+      <Toolbar>      
+      {`Score: ${score}/20`}
+      </Toolbar>
+    </AppBar>     
     
-      <header>
+    <Container maxWidth='false'>
+      {/* <header>
         <h1> {`Score: ${score}/20`} </h1>
-      </header>
+      </header> */}
 
       <main>
-        {(isLoading) ? <h1>Loading...</h1> : !question ? <Intro incorrect={incorrect}/> :
-        
+        {(isLoading) ? <h1>Loading...</h1> : (question===0) ? <Intro incorrect={incorrect}/> :
+        (question===21) ? <FinalScore score={score}/> :
         <FlashcardList   
           //// state props        
           peopleData={peopleData}          
@@ -141,6 +150,7 @@ function App() {
 
       }
       </main>
+    </Container>
 
     </div>
 
