@@ -1,8 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {
+  useState,
+  useEffect
+} from 'react'
 import './App.css';
 import FlashcardList from './components/FlashcardList'
 import Intro from './components/Intro'
-import { Container, AppBar, Toolbar, Typography} from '@material-ui/core'
+import {
+  Container,
+  AppBar,
+  Toolbar,
+  Typography
+} from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import FinalScore from './components/FinalScore';
 
@@ -14,7 +22,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [question, setQuestion] = useState(0)
 
-  
+
   useEffect(() => {
 
     (async function getData() {
@@ -22,55 +30,50 @@ function App() {
 
       // fetch first array of objects with people data
       const peopleData1 = fetch(
-        'https://swapi.dev/api/people/',
-      {method: 'get',
-      headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-      }}).then(success)
-    
+        'https://swapi.dev/api/people/', {
+          method: 'get',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then(success)
+
       // fetch second array of objects with people data
       const peopleData2 = fetch('https://swapi.dev/api/people/?page=2')
-      .then(success)
-    
+        .then(success)
+
       // await then return both fetch requests.... 
       const allPeopleData = await Promise.all([peopleData1, peopleData2])
-      // then concat into single array
-      .then(data => [].concat.apply([], data))
+        // then concat into single array
+        .then(data => [].concat.apply([], data))
 
       // create variable of allPeopleData then array of URLs to fetch homeworlds
       let peopleArray = allPeopleData
-      const planetLinks = peopleArray.map(personObj => personObj.homeworld.replace(/http/g,"https"))
+      const planetLinks = peopleArray.map(personObj => personObj.homeworld.replace(/http/g, "https"))
 
       // Get homeworld names of each character and add to peopleArray, then add an id and flipped state 
       planetLinks.forEach((url, index) => {
-        fetch(url,
-          {
-            method: 'get',
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest'
-            }
-          }).then(res => res.json()).then(data => {
-            peopleArray[index].homeworldName = data.name
-            peopleArray[index].id = index + 1
-            peopleArray[index].flipped = false
-            peopleArray[index].complete = false            
-          })
+        fetch(url, {
+          method: 'get',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).then(res => res.json()).then(data => {
+          peopleArray[index].homeworldName = data.name
+          peopleArray[index].id = index + 1
+          peopleArray[index].flipped = false
+          peopleArray[index].complete = false
+        })
       })
 
-      /////////////////////////////////////////////////////////////////////
-      // Delay setting peopleData state until peopleArray has been set!! //
-      /////////////////////////////////////////////////////////////////////     
-      setTimeout(() => {
-        setPeopleData(peopleArray)
-        setIsLoading(false)
-      }, 500)
+      setPeopleData(peopleArray)
+      setIsLoading(false)
 
-    }) () // getData
-      
-   
+    })() // getData
+
+
   }, []) // useEffect
-  
-  
+
+
   const flip = (id) => {
     setPeopleData(prevData => {
       const newData = prevData.map(person => {
@@ -100,7 +103,7 @@ function App() {
       return newData
     })
   }
-  
+
   //////////////////////
   // Button functions //
   //////////////////////
@@ -138,55 +141,99 @@ function App() {
   const progressStyle = {
     marginTop: '2rem'
   }
-  
-  return (
-    <div>    
-      <Container maxWidth='sm'>
 
-        <AppBar position="static" style={appbarStyle}>
-          <Toolbar style={toolbarStyle}>      
-            <Typography variant="h6" style={titleStyle}>
-              Star Wars Homeworld Quiz       
-            </Typography>
-            <Typography variant="h6" style={scoreStyle}>
-              {`Score: ${score}/20`}        
-            </Typography>
-          </Toolbar>
-        </AppBar>
+  return ( <
+    div >
+    <
+    Container maxWidth = 'sm' >
 
-        <main>
-            {(isLoading) ? <h1>Loading...</h1> : (question===0) ? <Intro incorrect={incorrect}/> :
-            (question===21) ? <FinalScore score={score}/> :
-            <FlashcardList   
-              //// state props        
-              peopleData={peopleData}          
-              question={question}
+    <
+    AppBar position = "static"
+    style = {
+      appbarStyle
+    } >
+    <
+    Toolbar style = {
+      toolbarStyle
+    } >
+    <
+    Typography variant = "h6"
+    style = {
+      titleStyle
+    } >
+    Star Wars Homeworld Quiz <
+    /Typography> <
+    Typography variant = "h6"
+    style = {
+      scoreStyle
+    } > {
+      `Score: ${score}/20`
+    } <
+    /Typography> < /
+    Toolbar > <
+    /AppBar>
 
-              //// function props
-              flip={flip}
-              completeQuestion={completeQuestion}            
-              correct={correct}
-              incorrect={incorrect}  
-            />
+    <
+    main > {
+      (isLoading) ? < h1 > Loading... < /h1> : (question===0) ? <Intro incorrect={incorrect}/ > : (question === 21) ? < FinalScore score = {
+        score
+      }
+      /> : <
+      FlashcardList
+      //// state props        
+      peopleData = {
+        peopleData
+      }
+      question = {
+        question
+      }
 
-          }   
-            {
-              (!question) ? '' : (question < 21) ?
-              <div>
-                <LinearProgress variant="determinate" value={question} style={progressStyle}/>  
-                <Typography variant='h6'>Question {question} out of 20</Typography>
-              </div> : ''
-          }
-                      
-            
+      //// function props
+      flip = {
+        flip
+      }
+      completeQuestion = {
+        completeQuestion
+      }
+      correct = {
+        correct
+      }
+      incorrect = {
+        incorrect
+      }
+      />
 
-        </main>
-      </Container>
+    } {
+      (!question) ? '' : (question < 21) ?
+      <
+      div >
+        <
+        LinearProgress variant = "determinate"
+      value = {
+        question
+      }
+      style = {
+        progressStyle
+      }
+      />   <
+      Typography variant = 'h6' > Question {
+        question
+      }
+      out of 20 < /Typography> < /
+      div >: ''
+    }
 
-    </div>
+
+
+    <
+    /main> < /
+    Container >
+
+    <
+    /div>
 
   )
-    
+
 
 }
 
