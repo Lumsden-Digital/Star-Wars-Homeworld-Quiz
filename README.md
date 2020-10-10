@@ -1,7 +1,5 @@
 # Star Wars Homeworld Quiz
-https://swapi-quiz.netlify.app/
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://swapi-quiz.netlify.app/ - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### API used - https://swapi.dev/
 
